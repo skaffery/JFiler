@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +15,6 @@ public class JFiler {
         int counter = 0;
         File[] files = getFilesInFolder(path);
         for (int i = 0; i < files.length; i++) counter += countFile(files[i]);
-
         return counter;
     }
 
@@ -24,11 +24,13 @@ public class JFiler {
      */
     void getFileNamesOfFolder(String pathToFolder) {
         File[] listOfFiles = getFilesInFolder(pathToFolder);
-
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 System.out.println("File " + listOfFiles[i].getName());
-            } else if (listOfFiles[i].isDirectory()) {
+                continue;
+            }
+
+            if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
         }
@@ -51,32 +53,23 @@ public class JFiler {
      * @return return array of string's that contain each line in file
      */
     String[] readFile(String path) {
-        String data;
-        String[] output = new String[0];
+        ArrayList<String> list = new ArrayList<>();
+        String[] output = null;
+        Scanner reader;
+        File file;
 
         try {
-
-            File file = new File(path);
-            Scanner myReader = new Scanner(file);
-            ArrayList<String> list = new ArrayList<>();
-
-            while (myReader.hasNextLine()) {
-                data = myReader.nextLine();
-                list.add(data);
+            file = new File(path);
+            reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                list.add(reader.nextLine());
             }
-
             output = new String[list.size()];
             for (int i = 0; i < list.size(); i++) output[i] = list.get(i);
-
-            myReader.close();
-
-            return output;
-
+            reader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println("File not found exception");
         }
-
         return output;
     }
 
@@ -86,33 +79,23 @@ public class JFiler {
      * @return return array of string's that contain each line in file
      */
     String[] readFile(File file) {
-        String data;
-        String[] output = new String[0];
+        ArrayList<String> list = new ArrayList<>();
+        String[] output = null;
+        Scanner reader;
 
         try {
-
             if (file.isFile()) {
-                Scanner myReader = new Scanner(file);
-                ArrayList<String> list = new ArrayList<>();
-
-                while (myReader.hasNextLine()) {
-                    data = myReader.nextLine();
-                    list.add(data);
+                reader = new Scanner(file);
+                while (reader.hasNextLine()) {
+                    list.add(reader.nextLine());
                 }
-
                 output = new String[list.size()];
                 for (int i = 0; i < list.size(); i++) output[i] = list.get(i);
-
-                myReader.close();
-
-                return output;
+                reader.close();
             }
-
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println("File not found exception");
         }
-
         return output;
     }
 
@@ -137,13 +120,8 @@ public class JFiler {
      */
     int countFile(String path) {
         int counter = 0;
-        try {
-            String[] readFileOutPut = readFile(path);
-            for (int i = 0; i < readFileOutPut.length;i++) counter++;
-        } catch (Exception e) {
-            System.err.println("{JFiler}(countFile): Some error was occurred:\n");
-            e.printStackTrace();
-        }
+        String[] readFileOutPut = readFile(path);
+        for (int i = 0; i < readFileOutPut.length;i++) counter++;
         return counter;
     }
 
@@ -154,13 +132,8 @@ public class JFiler {
      */
     int countFile(File file) {
         int counter = 0;
-        try {
-            String[] readFileOutPut = readFile(file);
-            for (int i = 0; i < readFileOutPut.length; i++) counter++;
-        } catch (Exception e) {
-            System.err.println("{JFiler}(countFile): Some error was occurred:\n");
-            e.printStackTrace();
-        }
+        String[] readFileOutPut = readFile(file);
+        for (int i = 0; i < readFileOutPut.length; i++) counter++;
         return counter;
     }
 
