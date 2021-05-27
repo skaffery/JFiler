@@ -5,11 +5,15 @@ import java.util.Scanner;
 
 public class JFiler {
 
-    // getLine by line index
-    // getKeyword by key input
-    // add main();
+    int getLinesInFolder(String path) {
+        int counter = 0;
+        File[] files = getFilesInFolder(path);
+        for (int i = 0; i < files.length; i++) counter += countFile(files[i]);
 
-    public static void getFileNamesOfFolder(String pathToFolder) {
+        return counter;
+    }
+
+    void getFileNamesOfFolder(String pathToFolder) {
         File[] listOfFiles = getFilesInFolder(pathToFolder);
 
         for (int i = 0; i < listOfFiles.length; i++) {
@@ -21,33 +25,18 @@ public class JFiler {
         }
     }
 
-    public static File[] getFilesInFolder(String path) {
+    File[] getFilesInFolder(String path) {
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
         return listOfFiles;
     }
 
-    public static void main(String[] args) {
-    /*    try { //  
-            System.out.println(args[0]);
-        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Type path to your file");
-            System.exit(0);
-        }
-        printFile("test.txt");
-
-     */
-        getFileNamesOfFolder(args[0]);
-     //   System.out.println(getLine());
-    }
-
-    public static String getLine(String path, int index) {
+    String getLine(String path, int index) {
         String[] output = readFile(path);
         return output[index];
     }
 
-    public static String[] readFile(String path) {
+    String[] readFile(String path) {
         String data;
         String[] output = new String[0];
 
@@ -77,7 +66,38 @@ public class JFiler {
         return output;
     }
 
-    public static void printFile(String path) {
+    String[] readFile(File file) {
+        String data;
+        String[] output = new String[0];
+
+        try {
+
+            if (file.isFile()) {
+                Scanner myReader = new Scanner(file);
+                ArrayList<String> list = new ArrayList<>();
+
+                while (myReader.hasNextLine()) {
+                    data = myReader.nextLine();
+                    list.add(data);
+                }
+
+                output = new String[list.size()];
+                for (int i = 0; i < list.size(); i++) output[i] = list.get(i);
+
+                myReader.close();
+
+                return output;
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        return output;
+    }
+
+    void printFile(String path) {
         try {
             String[] readFileOutPut = readFile(path);
             for (int i = 0; i < readFileOutPut.length;i++) System.out.println(readFileOutPut[i]);
@@ -87,11 +107,23 @@ public class JFiler {
         }
     }
 
-    public static int countFile(String path) {
+    int countFile(String path) {
         int counter = 0;
         try {
             String[] readFileOutPut = readFile(path);
             for (int i = 0; i < readFileOutPut.length;i++) counter++;
+        } catch (Exception e) {
+            System.err.println("{JFiler}(countFile): Some error was occurred:\n");
+            e.printStackTrace();
+        }
+        return counter;
+    }
+
+    int countFile(File file) {
+        int counter = 0;
+        try {
+            String[] readFileOutPut = readFile(file);
+            for (int i = 0; i < readFileOutPut.length; i++) counter++;
         } catch (Exception e) {
             System.err.println("{JFiler}(countFile): Some error was occurred:\n");
             e.printStackTrace();
