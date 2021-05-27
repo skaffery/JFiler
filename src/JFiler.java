@@ -28,7 +28,7 @@ public class JFiler {
     }
 
     public static void main(String[] args) {
-    /*    try {
+    /*    try { //  
             System.out.println(args[0]);
         } catch (java.lang.ArrayIndexOutOfBoundsException e) {
             Scanner scanner = new Scanner(System.in);
