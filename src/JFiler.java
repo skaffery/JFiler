@@ -7,19 +7,20 @@ import java.util.Scanner;
 public class JFiler {
 
     /**
-     * Function that allows to get number of lines in folders
+     * A method that allows you to get the number of rows in a folder
      * @param path path to folder
-     * @return return sum of lines in every file of folder
+     * @return Returns the number of rows in the folder
      */
-    int getLinesInFolder(String path) {
+    int getNumbersOfRowsInFolder(String path) {
         return getFilesInFolder(path).length;
     }
 
     /**
-     * Function that print type (File/Directory) and name of file in folder
+     * A method that determines the type of an entity (file or folder)
+     * and outputs its name along with the type
      * @param pathToFolder path to folder
      */
-    void getFileNamesOfFolder(String pathToFolder) {
+    void getFilesInfoInFolder(String pathToFolder) {
         File[] listOfFiles = getFilesInFolder(pathToFolder);
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
@@ -34,19 +35,18 @@ public class JFiler {
     }
 
     /**
-     * Function that return array of files in directory
+     * A method that outputs a list of files from the specified directory
      * @param path path to folder
      * @return return a array of File's
      */
     File[] getFilesInFolder(String path) {
-        File[] listOfFiles = new File(path).listFiles();
-        return listOfFiles;
+        return new File(path).listFiles();
     }
 
     /**
-     * Function that helps to see a containment of file
+     * A method that reads a file and returns it in String[] format
      * @param path path to file
-     * @return return array of string's that contain each line in file
+     * @return return String[] that contain each line in file
      */
     String[] readFile(String path) {
         ArrayList<String> list = new ArrayList<>();
@@ -70,9 +70,9 @@ public class JFiler {
     }
 
     /**
-     * Function that helps to see a containment of file
-     * @param file file in File format
-     * @return return array of string's that contain each line in file
+     * A method that reads a file and returns it in String[] format
+     * @param file
+     * @return return String[] that contain each line in file
      */
     String[] readFile(File file) {
         ArrayList<String> list = new ArrayList<>();
@@ -95,7 +95,7 @@ public class JFiler {
     }
 
     /**
-     * Method that get a containment of file from readFile() method and prints it
+     * A method that outputs the contents of a file to the console
      * @param path path to file
      */
     void printFile(String path) {
@@ -108,7 +108,7 @@ public class JFiler {
     }
 
     /**
-     * Count a number of lines in file
+     * Reads the number of lines in the file and returns it
      * @param path path to file
      * @return number of lines in file
      */
@@ -117,8 +117,8 @@ public class JFiler {
     }
 
     /**
-     * Count a number of lines in file
-     * @param file file in File's format
+     * Reads the number of lines in the file and returns it
+     * @param file path to file
      * @return number of lines in file
      */
     int countFile(File file) {
