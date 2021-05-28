@@ -12,10 +12,7 @@ public class JFiler {
      * @return return sum of lines in every file of folder
      */
     int getLinesInFolder(String path) {
-        int counter = 0;
-        File[] files = getFilesInFolder(path);
-        for (int i = 0; i < files.length; i++) counter += countFile(files[i]);
-        return counter;
+        return getFilesInFolder(path).length;
     }
 
     /**
@@ -42,8 +39,7 @@ public class JFiler {
      * @return return a array of File's
      */
     File[] getFilesInFolder(String path) {
-        File folder = new File(path);
-        File[] listOfFiles = folder.listFiles();
+        File[] listOfFiles = new File(path).listFiles();
         return listOfFiles;
     }
 
@@ -81,21 +77,20 @@ public class JFiler {
     String[] readFile(File file) {
         ArrayList<String> list = new ArrayList<>();
         String[] output = null;
-        Scanner reader;
-
+        Scanner reader = null;
         try {
             if (file.isFile()) {
                 reader = new Scanner(file);
                 while (reader.hasNextLine()) {
                     list.add(reader.nextLine());
                 }
-                output = new String[list.size()];
-                for (int i = 0; i < list.size(); i++) output[i] = list.get(i);
-                reader.close();
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found exception");
         }
+        output = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) output[i] = list.get(i);
+        reader.close();
         return output;
     }
 
@@ -108,7 +103,6 @@ public class JFiler {
             String[] readFileOutPut = readFile(path);
             for (int i = 0; i < readFileOutPut.length;i++) System.out.println(readFileOutPut[i]);
         } catch (Exception e) {
-            System.err.println("{JFiler}(printFile): Some error was occurred:\n");
             e.printStackTrace();
         }
     }
@@ -119,10 +113,7 @@ public class JFiler {
      * @return number of lines in file
      */
     int countFile(String path) {
-        int counter = 0;
-        String[] readFileOutPut = readFile(path);
-        for (int i = 0; i < readFileOutPut.length;i++) counter++;
-        return counter;
+        return readFile(path).length;
     }
 
     /**
@@ -131,10 +122,7 @@ public class JFiler {
      * @return number of lines in file
      */
     int countFile(File file) {
-        int counter = 0;
-        String[] readFileOutPut = readFile(file);
-        for (int i = 0; i < readFileOutPut.length; i++) counter++;
-        return counter;
+        return readFile(file).length;
     }
 
 }
