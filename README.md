@@ -1,5 +1,5 @@
 # JFiler
-
+JFiler is a simple application that allows you to simplify the work with reading, writing and displaying information about folders and files
 
 ## Usage:
 
